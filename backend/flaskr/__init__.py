@@ -62,7 +62,12 @@ def create_app(test_config=None):
     @app.route('/questions')
     def get_questions():
         question = list(map(Question.format, Question.query.all()))
-        categories = list(map(Category.format, Category.query.all()))
+        categories = Category.query.all()
+        categoriesDict = {}
+
+        for category in categories:
+            categoriesDict[category.id] = category.type
+
         page = request.args.get('page', 1, type=int)
         start = (page - 1) * QUESTIONS_PER_PAGE
         end = start + QUESTIONS_PER_PAGE
@@ -72,7 +77,7 @@ def create_app(test_config=None):
             'questions': question[start:end],
             'page': page,
             'totalQuestions': len(question),
-            'categories': categories,
+            'categories': categoriesDict,
             'current_category': None,
         }
 
