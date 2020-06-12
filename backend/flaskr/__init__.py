@@ -136,6 +136,11 @@ def create_app(test_config=None):
 
 
     @app.route("/questions", methods=["POST"])
+    def add_question():
+          data = request.get_json()
+          
+
+
     '''
   @TODO: 
   Create a POST endpoint to get questions based on a search term. 
