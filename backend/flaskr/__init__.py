@@ -124,31 +124,34 @@ def create_app(test_config=None):
             abort(422)
 
     '''
-  @TODO: 
-  Create an endpoint to POST a new question, 
-  which will require the question and answer text, 
+  @TODO:
+  Create an endpoint to POST a new question,
+  which will require the question and answer text,
   category, and difficulty score.
 
-  TEST: When you submit a question on the "Add" tab, 
+  TEST: When you submit a question on the "Add" tab,
   the form will clear and the question will appear at the end of the last page
-  of the questions list in the "List" tab.  § 1q  
+  of the questions list in the "List" tab.  § 1q
   '''
 
     @app.route('/questions', methods=["POST"])
     def add_question():
 
+        body = request.get_json()
+        new_question = body['question']
+        new_answer = body['answer']
+        new_difficulty = body['difficulty']
+        new_category = body['category']
+
         try:
-            question = request.json.get('question')
-            answer = request.json.get('answer')
-            category = request.json.get('category')
-            difficulty = request.json.get('difficulty')
+            question = Question(
+                question=new_question,
+                answer=new_answer,
+                category=new_category,
+                difficulty=new_difficulty
+            )
 
-            new_question = Question(question=question,
-                                    answer=answer,
-                                    category=str(category + 1),
-                                    difficulty=difficulty)
-
-            new_question.insert()
+            question.insert()
 
             return jsonify({
                 'success': True,
