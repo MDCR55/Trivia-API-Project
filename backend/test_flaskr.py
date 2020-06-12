@@ -77,6 +77,12 @@ class TriviaTestCase(unittest.TestCase):
             Question.question.ilike(f'%{search_term}%')).count()
         self.assertEqual(data['totalQuestions'], questions)
 
+    def test_get_questions_from_category(self):
+
+        res = self.client().get(f"/categories/1/questions")
+        data = json.loads(res.data)
+        self.assertEqual(data['currentCategory'], 2)
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
