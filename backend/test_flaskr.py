@@ -68,6 +68,15 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['question'])
 
+    def test_search(self):
+
+        search_term = 'man'
+        res = self.client().post(f'/questions/{search_term}')
+        data = json.loads(res.data)
+        questions = Question.query.filter(
+            Question.question.ilike(f'%{search_term}%')).count()
+        self.assertEqual(data['totalQuestions'], questions)
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

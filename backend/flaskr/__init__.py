@@ -138,7 +138,7 @@ def create_app(test_config=None):
     def add_question():
 
         body = request.get_json()
-        new_question = body['question']
+        new_question = body["question"]
         new_answer = body['answer']
         new_difficulty = body['difficulty']
         new_category = body['category']
@@ -162,15 +162,32 @@ def create_app(test_config=None):
             abort(422)
 
     '''
-  @TODO: 
-  Create a POST endpoint to get questions based on a search term. 
-  It should return any questions for whom the search term 
-  is a substring of the question. 
+  @TODO:
+  Create a POST endpoint to get questions based on a search term.
+  It should return any questions for whom the search term
+  is a substring of the question.
 
-  TEST: Search by any phrase. The questions list will update to include 
-  only question that include that string within their question. 
-  Try using the word "title" to start. 
+  TEST: Search by any phrase. The questions list will update to include
+  only question that include that string within their question.
+  Try using the word "title" to start.
   '''
+
+    @app.route('/questions/<searchTerm>', methods=["POST"])
+    def search_question(searchTerm):
+
+        res_search = Question.query.filter(
+            Question.question.ilike(f'%{searchTerm}%')).all()
+        current_questions = paginate_questions(request, res_search)
+
+        if len(current_questions) == 0:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'questions': current_questions,
+            'totalQuestions': len(current_questions),
+            'currentCategory': ''
+        })
 
     '''
   @TODO: 
