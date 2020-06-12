@@ -131,8 +131,13 @@ def create_app(test_config=None):
 
   TEST: When you submit a question on the "Add" tab, 
   the form will clear and the question will appear at the end of the last page
-  of the questions list in the "List" tab.  
+  of the questions list in the "List" tab.  § 1q  
   '''
+
+    @app.route('/questions', methods=["POST"])
+    def add_question():
+        question = request.json.get('question')
+        answer = request.json.get('answer')
 
     '''
   @TODO: 
