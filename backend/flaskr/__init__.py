@@ -136,8 +136,27 @@ def create_app(test_config=None):
 
     @app.route('/questions', methods=["POST"])
     def add_question():
-        question = request.json.get('question')
-        answer = request.json.get('answer')
+
+        try:
+            question = request.json.get('question')
+            answer = request.json.get('answer')
+            category = request.json.get('category')
+            difficulty = request.json.get('difficulty')
+
+            new_question = Question(question=question,
+                                    answer=answer,
+                                    category=str(category + 1),
+                                    difficulty=difficulty)
+
+            new_question.insert()
+
+            return jsonify({
+                'success': True,
+                'question': question.format()
+            })
+
+        except:
+            abort(422)
 
     '''
   @TODO: 
