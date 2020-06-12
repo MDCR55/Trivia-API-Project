@@ -19,6 +19,13 @@ class TriviaTestCase(unittest.TestCase):
             'localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
+        self.test_question = {
+            'question': 'What is the capital of KSA',
+            'answer': 'Riyadh',
+            'difficulty': '1',
+            'category': '1'
+        }
+
         # binds the app to the current context
         with self.app.app_context():
             self.db = SQLAlchemy()
@@ -46,6 +53,35 @@ class TriviaTestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
+
+    def test_delete_questions(self):
+        res = self.client().get('/questions')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+
+    def test_add_questions(self):
+        res = self.client().post('/questions', json=self.test_question)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['question'])
+
+    def test_search(self):
+
+        search_term = 'man'
+        res = self.client().post(f'/questions/{search_term}')
+        data = json.loads(res.data)
+        questions = Question.query.filter(
+            Question.question.ilike(f'%{search_term}%')).count()
+        self.assertEqual(data['totalQuestions'], questions)
+
+    def test_get_questions_from_category(self):
+
+        res = self.client().get(f"/categories/1/questions")
+        data = json.loads(res.data)
+        self.assertEqual(data['currentCategory'], 2)
 
 
 # Make the tests conveniently executable
