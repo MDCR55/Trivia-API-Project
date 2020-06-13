@@ -188,7 +188,7 @@ def create_app(test_config=None):
             categories = Category.query.all()
 
             if id <= len(categories):
-                questions = Question.query.filter_by(category=id).all()
+                questions = Question.query.filter_by(category=str(id)).all()
                 current_questions = paginate_questions(request, questions)
 
                 return jsonify({
@@ -229,10 +229,10 @@ def create_app(test_config=None):
             if prv_question is not None:
                 questions = Question.query.filter(
                     Question.id.notin_(prv_question),
-                    Question.category == category_id).all()
+                    Question.category == str(category_id)).all()
             else:
                 questions = Question.query.filter(
-                    Question.category == category_id).all()
+                    Question.category == str(category_id)).all()
 
         next_question = questions[random.randrange(
             0, len(questions))].format() if len(
