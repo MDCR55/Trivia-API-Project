@@ -42,3 +42,205 @@ The `./frontend` directory contains a complete React frontend to consume the dat
 Pay special attention to what data the frontend is expecting from each API response to help guide how you format your API. 
 
 [View the README.md within ./frontend for more details.](./frontend/README.md)
+
+## API Docs
+
+- **GET "/categories"**
+
+  - Returns a JSON object of the questions categories:
+
+  - ```JSON
+    {
+      "categories": [
+        {
+          "id": 1, 
+          "type": "Science"
+        }, 
+        {
+          "id": 2, 
+          "type": "Art"
+        }, 
+        {
+          "id": 3, 
+          "type": "Geography"
+        }, 
+        {
+          "id": 4, 
+          "type": "History"
+        }, 
+        {
+          "id": 5, 
+          "type": "Entertainment"
+        }, 
+        {
+          "id": 6, 
+          "type": "Sports"
+        }
+      ], 
+      "success": true
+    }
+    ```
+
+- **GET "/questions?page=1"**
+
+  - Returns paginated questions based on the page number	
+
+  - ```json
+      {
+        "categories": {
+          "1": "Science", 
+          "2": "Art", 
+          "3": "Geography", 
+          "4": "History", 
+          "5": "Entertainment", 
+          "6": "Sports"
+        }, 
+        "current_category": null, 
+        "questions": [
+          {
+            "answer": "Apollo 13", 
+            "category": 5, 
+            "difficulty": 4, 
+            "id": 2, 
+            "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+          },{
+          ...
+          } 
+        "success": true, 
+        "totalQuestions": 10
+      }
+      ```
+
+- **POST"/questions/**
+
+  - Add a new question to the database
+
+  - Require the following information to be filled in the body
+
+    - `question`: the question itself
+    - `answer`: the answer of that question
+    - `category`: the category of that question
+    - `difficulty`: the defficulty level of that question
+
+  - Sample body:
+
+    - ```json
+      {
+          "question":"What is the capital of Saudi Arabia",
+          "answer":"Riyadh",
+          "category": "3",
+          "difficulty":"1"
+      }
+      ```
+
+  - Response would be like:
+
+    - ```json
+      {
+         "question":{
+            "answer":"Riyadh",
+            "category":3,
+            "difficulty":1,
+            "id":25,
+            "question":"What is the capital of Saudi Arabia"
+         },
+         "success":true
+      }
+      ```
+
+- **DELETE "/questions/int:question_id"**
+
+  - Will delete a question from the database based on the `question_id` and will return a JSON object with the id of the deleted question and the remaining questions 
+
+  - ```json
+    {
+      "deleted": 10,
+      "questions": [
+        {
+          "answer": "Apollo 13",
+          "category": 5,
+          "difficulty": 4,
+          "id": 2,
+          "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+        },
+        {
+        ...
+        }
+      ],
+      "success": true,
+      "totalQuestions": 10
+    }
+    ```
+
+- **POST "/search"**
+
+  - Search for full question or part of that question
+
+  - Use `searchTerm` as a parameter in the url to get the resonse like `http://localhost:3000/questions/saudi` using POST will return the following:
+
+  - ```json
+    {
+      "currentCategory": "", 
+      "questions": [
+        {
+          "answer": "Riyadh", 
+          "category": 3, 
+          "difficulty": 1, 
+          "id": 25, 
+          "question": "What is the capital of Saudi Arabia"
+        }
+      ], 
+      "success": true, 
+      "totalQuestions": 1
+    }
+    ```
+
+  - **GET "/categories/int:category_id/questions"**
+
+    - Return the questions of a specific category
+
+    - Response would be like this:
+
+    - ```json
+      {
+        "currentCategory": 2, 
+        "questions": [
+          {
+            "answer": "Escher", 
+            "category": 2, 
+            "difficulty": 1, 
+            "id": 16, 
+            "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+          }, 
+          {
+          ...
+          }
+        ], 
+        "success": true, 
+        "totalQuestions": 4
+      }
+      ```
+
+    - **POST "/quizzes"**
+
+      - Will search for questions based on selected category
+
+      - The request body will be like:
+
+        - `previous_questions`: List of previous questions that have been answered
+        - `quiz_category`: The category selected in the quiz
+
+      - Response body:
+
+        - ```json
+          {
+            "question": {
+              "answer": "Jackson Pollock", 
+              "category": 2, 
+              "difficulty": 2, 
+              "id": 19, 
+              "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+            }, 
+            "success": true
+          }
+          ```
