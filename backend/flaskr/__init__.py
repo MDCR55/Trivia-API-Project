@@ -112,8 +112,8 @@ def create_app(test_config=None):
 
             return jsonify(result)
 
-        except BaseException:
-            abort(422)
+        except:
+            abort(404)
 
     '''
     function for posting a new question
@@ -198,7 +198,7 @@ def create_app(test_config=None):
                     'currentCategory': id + 1
                 })
             else:
-                abort(400)
+                abort(404)
 
         except BaseException:
             abort(422)
