@@ -103,12 +103,76 @@ Pay special attention to what data the frontend is expecting from each API respo
             "difficulty": 4, 
             "id": 2, 
             "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+          }, 
+          {
+            "answer": "Tom Cruise", 
+            "category": 5, 
+            "difficulty": 4, 
+            "id": 4, 
+            "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+          }, 
+          {
+            "answer": "Edward Scissorhands", 
+            "category": 5, 
+            "difficulty": 3, 
+            "id": 6, 
+            "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+          }, 
+          {
+            "answer": "Uruguay", 
+            "category": 6, 
+            "difficulty": 4, 
+            "id": 11, 
+            "question": "Which country won the first ever soccer World Cup in 1930?"
+          }, 
+          {
+            "answer": "George Washington Carver", 
+            "category": 4, 
+            "difficulty": 2, 
+            "id": 12, 
+            "question": "Who invented Peanut Butter?"
+          }, 
+          {
+            "answer": "Lake Victoria", 
+            "category": 3, 
+            "difficulty": 2, 
+            "id": 13, 
+            "question": "What is the largest lake in Africa?"
+          }, 
+          {
+            "answer": "The Palace of Versailles", 
+            "category": 3, 
+            "difficulty": 3, 
+            "id": 14, 
+            "question": "In which royal palace would you find the Hall of Mirrors?"
+          }, 
+          {
+            "answer": "Agra", 
+            "category": 3, 
+            "difficulty": 2, 
+            "id": 15, 
+            "question": "The Taj Mahal is located in which Indian city?"
+          }, 
+          {
+            "answer": "Escher", 
+            "category": 2, 
+            "difficulty": 1, 
+            "id": 16, 
+            "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+          }, 
+          {
+            "answer": "Mona Lisa", 
+            "category": 2, 
+            "difficulty": 3, 
+            "id": 17, 
+            "question": "La Giaconda is better known as what?"
           }
-        "success" : true, 
-        "totalQuestions" : 10
+        ], 
+        "success": true, 
+        "totalQuestions": 10
       }
       ```
-  
+
 - **POST"/questions/**
 
   - Add a new question to the database
@@ -118,7 +182,7 @@ Pay special attention to what data the frontend is expecting from each API respo
     - `question`: the question itself
     - `answer`: the answer of that question
     - `category`: the category of that question
-    - `difficulty`: the defficulty level of that question
+    - `difficulty`: the difficulty level of that question
 
   - Sample body:
 
@@ -171,7 +235,7 @@ Pay special attention to what data the frontend is expecting from each API respo
 
   - Search for full question or part of that question
 
-  - Use `searchTerm` as a parameter in the url to get the resonse like `http://localhost:3000/questions/saudi` using POST will return the following:
+  - Use `searchTerm` as a parameter in the URL to get the response like `http://localhost:3000/questions/saudi` using POST will return the following:
 
   - ```json
     {
