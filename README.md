@@ -103,14 +103,12 @@ Pay special attention to what data the frontend is expecting from each API respo
             "difficulty": 4, 
             "id": 2, 
             "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-          },{
-          ...
-          } 
-        "success": true, 
-        "totalQuestions": 10
+          }
+        "success" : true, 
+        "totalQuestions" : 10
       }
       ```
-
+  
 - **POST"/questions/**
 
   - Add a new question to the database
@@ -162,16 +160,13 @@ Pay special attention to what data the frontend is expecting from each API respo
           "difficulty": 4,
           "id": 2,
           "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-        },
-        {
-        ...
         }
       ],
       "success": true,
       "totalQuestions": 10
     }
     ```
-
+  
 - **POST "/search"**
 
   - Search for full question or part of that question
@@ -211,30 +206,27 @@ Pay special attention to what data the frontend is expecting from each API respo
             "difficulty": 1, 
             "id": 16, 
             "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
-          }, 
-          {
-          ...
           }
         ], 
         "success": true, 
         "totalQuestions": 4
       }
       ```
-
+      
     - **POST "/quizzes"**
-
-      - Will search for questions based on selected category
-
-      - The request body will be like:
-
-        - `previous_questions`: List of previous questions that have been answered
+    
+  - Will search for questions based on selected category
+    
+  - The request body will be like:
+    
+    - `previous_questions`: List of previous questions that have been answered
         - `quiz_category`: The category selected in the quiz
 
       - Response body:
-
-        - ```json
+    
+    - ```json
           {
-            "question": {
+        "question": {
               "answer": "Jackson Pollock", 
               "category": 2, 
               "difficulty": 2, 

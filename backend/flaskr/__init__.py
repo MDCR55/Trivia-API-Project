@@ -215,7 +215,7 @@ def create_app(test_config=None):
             body = request.get_json()
             prv_question = body['previous_questions']
             category = str(int(body["quiz_category"]["id"])+1)
-            
+
             if category == 0:
                 if prv_question is not None:
                     questions = Question.query.filter(
@@ -232,7 +232,7 @@ def create_app(test_config=None):
                 else:
                     questions = Question.query.filter(
                         Question.category == category.id).all()
-                        
+
             next_question = questions[random.randrange(
                 0, len(questions))].format() if len(
                     questions) > 0 else None
@@ -257,7 +257,7 @@ def create_app(test_config=None):
     def not_found(error):
         return jsonify({"success": False, "error": 400,
                         "message": "Bad request."}), 400
-                        
+
     @app.errorhandler(422)
     def unprocessable(error):
         return (
