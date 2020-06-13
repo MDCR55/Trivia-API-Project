@@ -211,41 +211,41 @@ def create_app(test_config=None):
 
     @app.route('/quizzes', methods=['POST'])
     def get_quiz():
-        try:
-            body = request.get_json()
-            prv_question = body['previous_questions']
-            category = str(int(body["quiz_category"]["id"])+1)
+        body = request.get_json()
 
-            if category == 0:
-                if prv_question is not None:
-                    questions = Question.query.filter(
-                        Question.id.notin_(prv_question)).all()
-                else:
-                    questions = Question.query.all()
-
+        prv_question = body.get('previous_questions', None)
+        category = body.get('quiz_category', None)
+        category_id = category.get('id', None)
+        
+        if category_id == 0:
+            if prv_question is not None:
+                questions = Question.query.filter(
+                    Question.id.notin_(prv_question)).all()
             else:
-                category = Category.query.get(category)
-                if prv_question is not None:
-                    questions = Question.query.filter(
-                        Question.id.notin_(prv_question),
-                        Question.category == category.id).all()
-                else:
-                    questions = Question.query.filter(
-                        Question.category == category.id).all()
+                questions = Question.query.all()
 
-            next_question = questions[random.randrange(
-                0, len(questions))].format() if len(
-                    questions) > 0 else None
+        else:
+            category = Category.query.get(category_id)
+            if prv_question is not None:
+                questions = Question.query.filter(
+                    Question.id.notin_(prv_question),
+                    Question.category == category_id).all()
+            else:
+                questions = Question.query.filter(
+                    Question.category == category_id).all()
 
-            if next_question is None:
-                next_question = False
+        next_question = questions[random.randrange(
+            0, len(questions))].format() if len(
+                questions) > 0 else None
 
-            return jsonify({
-                'success': True,
-                'question': next_question
-            })
-        except BaseException:
-            abort(422)
+        if next_question is None:
+            next_question = False
+
+        return jsonify({
+            'success': True,
+            'question': next_question
+        })
+
 
     '''
     ##############
